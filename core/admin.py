@@ -17,11 +17,11 @@ class CustomerAdmin(admin.TabularInline):
     extra = 0
     readonly_fields = ('external_id', 'email', 'active_id',)
 
-    def has_add_permission(self, request, obj=None):
-        return False
+    # def has_add_permission(self, request, obj=None):
+    #     return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
 
 
 class ConnectionAdmin(admin.TabularInline):

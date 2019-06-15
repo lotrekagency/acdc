@@ -25,7 +25,7 @@ SECRET_KEY = '5i01-vyndew*mbvi(d)a!ogf1p^2(!5%618-mh48sd(ctdi_!!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'huey.contrib.djhuey',
     'api',
     'rest_framework'
 ]
