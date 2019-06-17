@@ -63,6 +63,5 @@ class Connection(models.Model):
 
         response = requests.post(self.project.api_url + '/api/3/connections', json=payload, headers=headers)
 
-        print (response.text)
         self.active_id = response.json()['connection']['id']
         super(Connection, self).save(*args, **kwargs)

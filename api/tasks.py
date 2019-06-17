@@ -56,4 +56,3 @@ def task_execute_store_order(request_data, project):
     payload['ecomOrder']['customerid'] = customer.active_id
 
     response = requests.post(url, json=payload, headers=headers)
-    print (response.json())
