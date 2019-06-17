@@ -6,6 +6,7 @@ if [ "$1" = "stop" ]; then
 fi
 
 if [ "$1" = "start" ]; then
-    python manage.py run_huey --logfile cronseg.log &
+    rm huey_logs.log
+    python manage.py run_huey --logfile huey_logs.log &> /dev/null &
     echo $! > huey.pid
 fi
