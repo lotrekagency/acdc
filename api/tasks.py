@@ -37,16 +37,20 @@ def task_execute_store_order(request_data, project):
     }
     response = requests.post(user_url, json=user_payload, headers=headers)
 
-    customer_id = response.json()['ecomCustomer']['id']
+    customer_id = None
     customer, created = Customer.objects.get_or_create(
         project=project,
-        external_id=external_id,
         email=email
     )
-
-    customer.active_id = customer_id
+    customer.external_id = external_id
+    try:
+        # Try to see if user exists in AC
+        customer_id = response.json()['ecomCustomer']['id']
+        customer.active_id = customer_id
+    except KeyError:
+        # User already exists in the system, update external values
+        pass
     customer.save()
-
     # Create order
 
     payload = {'ecomOrder' : None}
