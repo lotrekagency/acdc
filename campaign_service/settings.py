@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '5i01-vyndew*mbvi(d)a!ogf1p^2(!5%618-mh48sd(ctdi_!!'
+SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -142,3 +142,11 @@ CUSTOM_PANEL_SETTINGS = {
     'main_color' : '#222225',
     'second_color' : '#484850',
 }
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn=os.getenv('SENTRY_URL', ''),
+    integrations=[DjangoIntegration()]
+)
