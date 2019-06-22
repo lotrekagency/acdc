@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Connection, Customer
+from .models import Project, Connection, Customer, Request
 
 
 admin.site.index_title = 'Welcome to Campaign Service'
@@ -30,6 +30,12 @@ class ConnectionAdmin(admin.TabularInline):
     readonly_fields = ('active_id',)
 
 
+class RequestAdmin(admin.ModelAdmin):
+    model = Request
+    list_display = ['project', 'category', 'email', 'datetime']
+    readonly_fields = ('project', 'category', 'payload', 'datetime', 'email')
+
+
 class ProjectAdmin(admin.ModelAdmin):
     inlines = [
         ConnectionAdmin,
@@ -43,3 +49,4 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(Request, RequestAdmin)

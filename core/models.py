@@ -1,5 +1,7 @@
 import requests
 import secrets
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
@@ -31,6 +33,22 @@ class Customer(models.Model):
     email = models.CharField(max_length=250)
     external_id = models.CharField(max_length=250)
     active_id = models.CharField(max_length=50, null=True, blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+
+class Request(models.Model):
+    NEWORDER = 'NEWORD'
+    REQUEST_CATEGORIES = [
+        (NEWORDER, 'NEWORDER'),
+    ]
+    email = models.CharField(max_length=250, null=True, blank=True)
+    category = models.CharField(
+        max_length=7,
+        choices=REQUEST_CATEGORIES,
+        default=NEWORDER,
+    )
+    datetime = models.DateTimeField(default=datetime.now, blank=True)
+    payload = models.TextField(default='')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
 

@@ -1,5 +1,6 @@
+import json
 import requests
-from core.models import Connection, Project, Customer
+from core.models import Connection, Project, Customer, Request
 
 from huey.contrib.djhuey import db_task
 
@@ -26,7 +27,14 @@ def task_execute_store_order(request_data, project):
 
     user_url = _compose_url(project, '/ecomCustomers')
     external_id = request_data.pop('userid')
-    email = request_data['email']
+    email = request_data.get('email', None)
+
+    Request.objects.create(
+        email=email,
+        payload=json.dumps(request_data, indent=4, sort_keys=True),
+        project=project
+    )
+
     user_payload = {
             "ecomCustomer": {
             "connectionid": connection_id,
