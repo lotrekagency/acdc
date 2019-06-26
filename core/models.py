@@ -38,8 +38,10 @@ class Customer(models.Model):
 
 class Request(models.Model):
     NEWORDER = 'NEWORD'
+    ABANDONEDCART = 'ABCART'
     REQUEST_CATEGORIES = [
-        (NEWORDER, 'NEWORDER'),
+        (NEWORDER, 'New Order'),
+        (ABANDONEDCART, 'Abandoned cart'),
     ]
     email = models.CharField(max_length=250, null=True, blank=True)
     category = models.CharField(

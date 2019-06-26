@@ -11,7 +11,7 @@ from rest_framework.decorators import detail_route, list_route
 
 from core.models import Connection, Project, Customer
 
-from .tasks import task_execute_store_order
+from .tasks import task_execute_store_order, task_execute_store_abandoned_cart
 
 class ActiveCampaignViewSet(viewsets.ViewSet):
 
@@ -33,6 +33,18 @@ class ActiveCampaignViewSet(viewsets.ViewSet):
         project = self.get_object(pk)
 
         task_execute_store_order(request.data, project)
+
+        #self._check_header(request, project)
+
+        return Response({'status' : 'Request queued'})
+
+
+    @detail_route(methods=["post"])
+    def abandoned_cart(self, request, pk):
+
+        project = self.get_object(pk)
+
+        task_execute_store_abandoned_cart(request.data, project)
 
         #self._check_header(request, project)
 
