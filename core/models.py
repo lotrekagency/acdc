@@ -39,9 +39,11 @@ class Customer(models.Model):
 class Request(models.Model):
     NEWORDER = 'NEWORD'
     ABANDONEDCART = 'ABCART'
+    SUBSCRIBENL = 'SUBNL'
     REQUEST_CATEGORIES = [
         (NEWORDER, 'New Order'),
         (ABANDONEDCART, 'Abandoned cart'),
+        (SUBSCRIBENL, 'Subscribe newsletter'),
     ]
     email = models.CharField(max_length=250, null=True, blank=True)
     category = models.CharField(
