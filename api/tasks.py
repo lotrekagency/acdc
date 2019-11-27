@@ -1,7 +1,7 @@
 import json
 import requests
 from core.models import Connection, Project, Customer, Request
-
+import datetime
 from huey.contrib.djhuey import db_task
 
 
@@ -125,3 +125,32 @@ def task_execute_store_abandoned_cart(request_data, project):
     payload['ecomOrder']['customerid'] = customer.active_id
 
     response = requests.post(url, json=payload, headers=headers)
+
+@db_task()
+def task_execute_store_subscribe_newsletter(request_data, project):
+
+    url = _compose_url(project, '/contacts')
+
+    connection_id = _get_connection_id(project)
+
+    headers = {'Api-Token': project.api_key}
+
+    email = request_data.get('email', None)
+    
+    Request.objects.create(
+        email=email,
+        payload=json.dumps(request_data, indent=4, sort_keys=True),
+        project=project,
+        category=Request.SUBSCRIBENL
+    )
+
+    payload = {
+        "contact": {
+            "email": email,
+            "firstName": str(datetime.datetime.now()),
+            "lastName": "",
+            "phone": ""
+        }
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    print(response)
