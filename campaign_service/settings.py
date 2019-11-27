@@ -23,10 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', True)
 
 ALLOWED_HOSTS = ['*']
 
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'DEVELOPMENT')
 
 # Application definition
 
@@ -109,8 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
 USE_I18N = True
 
 USE_L10N = True
@@ -131,7 +130,11 @@ STATICFILES_DIRS = (
 from huey import RedisHuey
 from redis import ConnectionPool
 
-pool = ConnectionPool(host='localhost', port=6379, max_connections=20)
+pool = ConnectionPool(
+    host=os.getenv('REDIS_URL', 'localhost'),
+    port=6379,
+    max_connections=20
+)
 HUEY = RedisHuey('cody', connection_pool=pool)
 
 CUSTOM_PANEL_SETTINGS = {
@@ -146,7 +149,11 @@ CUSTOM_PANEL_SETTINGS = {
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-sentry_sdk.init(
-    dsn=os.getenv('SENTRY_URL', ''),
-    integrations=[DjangoIntegration()]
-)
+if settings.ENVIRONMENT != "DEVELOPMENT":
+    sentry_sdk.init(
+        dsn=os.getenv('SENTRY_URL', ''),
+        integrations=[DjangoIntegration()]
+    )
+
+
+TIME_ZONE = os.getenv('TIME_ZONE', 'Europe/Rome')
