@@ -80,8 +80,11 @@ WSGI_APPLICATION = 'campaign_service.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('POSTGRES_DB', 'localhost'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'admin'),
+        'HOST': os.getenv('DB_HOST', 'db')
     }
 }
 
@@ -123,7 +126,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'build/'),
     os.path.join(BASE_DIR, 'public'),
 )
 
@@ -149,7 +151,7 @@ CUSTOM_PANEL_SETTINGS = {
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-if settings.ENVIRONMENT != "DEVELOPMENT":
+if ENVIRONMENT != "DEVELOPMENT":
     sentry_sdk.init(
         dsn=os.getenv('SENTRY_URL', ''),
         integrations=[DjangoIntegration()]

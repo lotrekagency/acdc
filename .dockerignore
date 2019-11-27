@@ -1,3 +1,5 @@
+db_data
+
 # System
 venv
 *.pyc
@@ -52,4 +54,5 @@ generated/
 *.mo
 *.sql
 
-db_data
+
+docker

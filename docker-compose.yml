@@ -1,0 +1,63 @@
+version: '3'
+services:
+
+  db:
+    image: library/postgres:11
+    restart: unless-stopped
+    networks:
+      - acdc-net
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    env_file: ./docker/staging/config/envs/db.env
+
+  redis:
+    image: library/redis:latest
+    restart: unless-stopped
+    networks:
+      - acdc-net
+    volumes:
+      - acdc-redis:/data
+
+  nginx:
+    image: library/nginx:latest
+    restart: always
+    ports:
+      - "8090:80"
+      - "443:443"
+    volumes:
+      - ./docker/staging/config/conf.d:/etc/nginx/conf.d
+      - ./static:/usr/share/nginx/static
+      - ./media:/usr/share/nginx/media
+    depends_on:
+      - web
+    networks:
+      - acdc-net
+
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/dockerfiles/web.Dockerfile
+    env_file:
+      - ./docker/staging/config/envs/web.env
+      - ./docker/staging/config/envs/db.env
+    volumes:
+      - ./static:/app/static
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    networks:
+      - acdc-net
+    command: bash ./acdcstart.sh
+
+volumes:
+  db:
+    driver: local
+  acdc-redis:
+    driver: local
+  acdcmedia:
+
+
+networks:
+  acdc-net:
+    driver: bridge
