@@ -36,7 +36,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./docker/dockerfiles/web.Dockerfile
+      dockerfile: ./Dockerfile
     env_file:
       - ./docker/staging/config/envs/web.env
       - ./docker/staging/config/envs/db.env
