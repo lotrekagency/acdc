@@ -2,6 +2,29 @@
 
 ## Setup a connection with the panel
 
+## Use with Docker Compose
+
+This project is based on Django and depends on `Redis` and `PostgreSQL`
+
+```
+  acdc:
+    image: lotrekagency/acdc:latest
+    env_file:
+      - ./envs/acdc.env
+    restart: unless-stopped
+    command: bash ./acdcstart.sh
+```
+
+Variables you need to set are:
+
+SECRET_KEY: The secret Key for the app
+ENVIRONMENT: environment (DEVELOPMENT, STAGING, PRODUCTION)
+
+REDIS_HOST: Redis Host
+DB_HOST: PostgreSQL Database Host
+POSTGRES_USER: PostgreSQL DB user
+POSTGRES_PASSWORD: PostgreSQL DB Password
+POSTGRES_DB: PostgreSQL DB name
 
 ## Try creating an order
 
