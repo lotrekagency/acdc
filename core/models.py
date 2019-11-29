@@ -11,7 +11,7 @@ class Project(models.Model):
 
     name = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250, unique=True)
-    token = models.CharField(max_length=48, null=True, blank=True)
+    token = models.CharField(max_length=250, null=True, blank=True)
     api_url = models.URLField(max_length=250, null=True, blank=True)
     api_key = models.CharField(max_length=250, null=True, blank=True)
 
