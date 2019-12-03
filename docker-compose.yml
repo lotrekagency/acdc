@@ -48,7 +48,6 @@ services:
       - redis
     networks:
       - acdc-net
-    command: bash ./acdcstart.sh
 
 volumes:
   db:

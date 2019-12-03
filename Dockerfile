@@ -20,3 +20,5 @@ COPY --from=build-py /usr/local/bin/ /usr/local/bin/
 WORKDIR /app
 
 RUN mkdir -p static media
+
+CMD ./acdcstart.sh

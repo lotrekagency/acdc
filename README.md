@@ -12,12 +12,12 @@ This project is based on Django and depends on `Redis` and `PostgreSQL`
     env_file:
       - ./envs/acdc.env
     restart: unless-stopped
-    command: bash ./acdcstart.sh
 ```
 
 Variables you need to set are:
 
 - SECRET_KEY: The secret Key for the app
+- STATIC_URL: The static url for the app
 - ENVIRONMENT: environment (DEVELOPMENT, STAGING, PRODUCTION)
 
 - REDIS_HOST: Redis Host
