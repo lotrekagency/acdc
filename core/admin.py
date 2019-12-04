@@ -17,12 +17,6 @@ class CustomerAdmin(admin.TabularInline):
     extra = 0
     readonly_fields = ('external_id', 'email', 'active_id',)
 
-    # def has_add_permission(self, request, obj=None):
-    #     return False
-
-    # def has_delete_permission(self, request, obj=None):
-    #     return False
-
 
 class ConnectionAdmin(admin.TabularInline):
     model = Connection
@@ -39,7 +33,6 @@ class RequestAdmin(admin.ModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     inlines = [
         ConnectionAdmin,
-        CustomerAdmin
     ]
     search_fields = ['name', 'slug']
     list_display = ['name', 'slug', 'token']

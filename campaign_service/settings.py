@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'campaign_service.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('POSTGRES_DB', 'localhost'),
+        'NAME': os.getenv('POSTGRES_DB', 'acdc'),
         'USER': os.getenv('POSTGRES_USER', 'postgres'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'admin'),
-        'HOST': os.getenv('DB_HOST', 'db')
+        'HOST': os.getenv('DB_HOST', 'localhost')
     }
 }
 
