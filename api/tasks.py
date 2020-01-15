@@ -136,6 +136,7 @@ def task_execute_store_subscribe_newsletter(request_data, project):
     headers = {'Api-Token': project.api_key}
 
     email = request_data.get('email', None)
+    list_id = request_data.get('list_id', None)
     
     Request.objects.create(
         email=email,
@@ -153,4 +154,20 @@ def task_execute_store_subscribe_newsletter(request_data, project):
         }
     }
     response = requests.post(url, json=payload, headers=headers)
-    print(response)
+
+    # if list_id exist and status is 201, put the contact into the list specified
+    if response.status_code == 201 and list_id:
+
+        contact_id = response.json()['contact']['id']
+
+        url_to_list = _compose_url(project, '/contactLists')
+        
+        payload = {
+            "contactList": {
+                "list": list_id,
+                "contact": contact_id,
+                "status": "1"
+            }
+        }
+
+        response = requests.post(url_to_list, json=payload, headers=headers)
