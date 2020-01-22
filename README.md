@@ -104,3 +104,69 @@ http://localhost:8000/api/deepdata/baldiflex/abandoned_cart/
   "currency": "USD"
 }
 ```
+
+# Mailchimp
+
+Mailchimp projects can be accessed through the API under the `/mailchimp/...` URL. The possible actions are:
+
+  - Create an order
+    ```
+    curl --location --request POST 'http://127.0.0.1:8000/mailchimp/mysite/order/' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "id":"myfirstorder",
+      "customer":{
+        "email_address": "email@email.email",
+        "opt_in_status": false
+      },
+      "currency_code": "EUR",
+      "order_total":328,
+      "lines": [
+        {
+          "product": {
+            "title": "Paper",
+            "price": 7.23
+          },
+          "price": 36.15,
+          "quantity": 5
+        }
+      ]
+    }'
+    ``` 
+
+  - Create a cart
+    ```
+    curl --location --request POST 'http://127.0.0.1:8000/mailchimp/mysite/order/' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "id":"myfirstorder",
+      "customer":{
+        "email_address": "email@email.email",
+        "opt_in_status": false
+      },
+      "currency_code": "EUR",
+      "order_total":328,
+      "checkout_url": "https://mysite/cart",
+      "lines": [
+        {
+          "product": {
+            "title": "Paper",
+            "price": 7.23
+          },
+          "price": 36.15,
+          "quantity": 5
+        }
+      ]
+    }'
+    ``` 
+
+  - Subscribe email
+    ```
+    curl --location --request POST 'http://127.0.0.1:8000/mailchimp/mysite/subscribe/' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "email_address": "email@email.email",
+      "status": "unsubscribed",
+      "language": "it"
+    }'
+    ``` 
