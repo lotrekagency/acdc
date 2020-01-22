@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'huey.contrib.djhuey',
     'api',
-    'rest_framework'
+    'rest_framework',
+    'mailchimp'
 ]
 
 MIDDLEWARE = [

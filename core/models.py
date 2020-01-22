@@ -6,10 +6,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
+from mailchimp.actions import delete_store
 
 class Project(models.Model):
-
+    ACTIVECAMPAIGN = 'AC'
+    MAILCHIMP = 'MC'
+    PROJECT_CATEGORIES = [
+        (ACTIVECAMPAIGN, 'Active Campaign'),
+        (MAILCHIMP, 'MailChimp'),
+    ]
     name = models.CharField(max_length=250)
+    proj_type = models.CharField(max_length=2, choices=PROJECT_CATEGORIES, default=ACTIVECAMPAIGN)
     slug = models.SlugField(max_length=250, unique=True)
     token = models.CharField(max_length=250, null=True, blank=True)
     api_url = models.URLField(max_length=250, null=True, blank=True)
@@ -21,6 +28,11 @@ class Project(models.Model):
     @classmethod
     def generate_token(cls):
         return secrets.token_urlsafe(48)
+
+    def delete(self, *args, **kwargs):
+        if self.proj_type == self.MAILCHIMP:
+            delete_store(self)
+        super(Project, self).delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         if not self.token:
