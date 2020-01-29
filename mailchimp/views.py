@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
-from .tasks import task_execute_save_order, task_execute_save_cart, task_execute_subscribe_list, task_execute_remove_cart
+from .tasks import task_execute_save_order, task_execute_save_cart, task_execute_subscribe_list, task_execute_remove_cart, get_script
 
 class MailchimpViewSet(viewsets.ViewSet):
 
@@ -45,3 +45,12 @@ class MailchimpViewSet(viewsets.ViewSet):
         task_execute_subscribe_list(project, request.data)
 
         return Response({'status' : 'Request queued'})
+
+    @detail_route(methods=["get"])
+    def get_script(self, request, pk):
+        project = self.get_object(pk)
+
+        ok, json = get_script(project)
+        if ok:
+            return Response(json['site_script'])
+        return Response(json, status=json['status'])
