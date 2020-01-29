@@ -129,3 +129,11 @@ def task_execute_subscribe_list(project, data):
     response = requests.post(root + endpoint, json=data, auth=HTTPBasicAuth('', project.api_key))
     if not response.ok:
         print(response.json())
+
+def get_script(project):
+    root = 'https://{}.api.mailchimp.com/3.0/'.format(urlparse(project.api_url).netloc.split('.')[0])
+    endpoint = 'connected-sites/{}'.format(project.token)
+
+    response = requests.get(root + endpoint, auth=HTTPBasicAuth('', project.api_key))
+    
+    return response.ok, response.json()
