@@ -6,3 +6,4 @@ requests==2.22.0
 sentry-sdk==0.10.2
 gunicorn
 psycopg2-binary
+djrobots==0.0.7

@@ -20,4 +20,5 @@ urlpatterns = [
     path('', admin.site.urls),
     path('api/', include('api.urls')),
     path('', include('mailchimp.urls')),
+    path('robots.txt', include('djrobots.urls')),
 ]

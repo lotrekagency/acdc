@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'huey.contrib.djhuey',
     'api',
     'rest_framework',
-    'mailchimp'
+    'mailchimp',
+    'djrobots'
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,4 @@ if ENVIRONMENT != "DEVELOPMENT":
 
 
 TIME_ZONE = os.getenv('TIME_ZONE', 'Europe/Rome')
+DJROBOTS_DISALLOWALL = True
