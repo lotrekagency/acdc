@@ -136,7 +136,7 @@ Mailchimp projects can be accessed through the API under the `/mailchimp/...` UR
 
   - Create a cart
     ```
-    curl --location --request POST 'http://127.0.0.1:8000/mailchimp/mysite/order/' \
+    curl --location --request POST 'http://127.0.0.1:8000/mailchimp/mysite/cart/' \
     --header 'Content-Type: application/json' \
     --data-raw '{
       "id":"myfirstorder",
